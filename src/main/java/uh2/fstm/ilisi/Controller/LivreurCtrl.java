@@ -48,9 +48,9 @@ public class LivreurCtrl {
         return null;
     }
     @RequestMapping(value="/create",method=RequestMethod.POST)
-    public void create(@RequestBody Livreur liv)
+    public Utilisateur create(@RequestBody Livreur liv)
     {
-        livreurService.Insertion(liv);
+        return (Utilisateur)userService.signup(liv,2);
     }
     @RequestMapping(value="/delete/{id}",method=RequestMethod.DELETE)
     public void delete(@PathVariable long id,@RequestHeader("Authorization") String token)
