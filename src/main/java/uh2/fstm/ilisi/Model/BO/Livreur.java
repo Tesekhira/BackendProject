@@ -1,8 +1,6 @@
 package uh2.fstm.ilisi.Model.BO;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,9 +14,19 @@ public class Livreur extends Utilisateur {
 
 
 
-    @OneToMany(mappedBy = "livreur")
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+            ,mappedBy = "livreurR")
     private Set<Recommander> recommandation=new HashSet<>();
+
+
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+            ,mappedBy="livreur")
+    private Set<Commande> commandes=new HashSet<>();
+
     private String path_img;
+
 
     public Livreur() {
         this.setType(2);
@@ -33,6 +41,14 @@ public class Livreur extends Utilisateur {
     public Livreur(String path_img,Set<Recommander> recommandation) {
         this.path_img = path_img;
         this.recommandation = recommandation;
+    }
+
+    public Set<Commande> getCommandes() {
+        return commandes;
+    }
+
+    public void setCommandes(Set<Commande> commandes) {
+        this.commandes = commandes;
     }
 
     public String getPath_img() {

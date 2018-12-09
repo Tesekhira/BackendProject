@@ -1,5 +1,7 @@
 package uh2.fstm.ilisi.Model.BO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -13,7 +15,8 @@ public class LigneCommande implements Serializable {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JsonIgnore
     private Commande cmd;
 
     private String nom_prod;

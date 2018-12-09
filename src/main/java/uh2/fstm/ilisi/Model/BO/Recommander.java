@@ -1,5 +1,7 @@
 package uh2.fstm.ilisi.Model.BO;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 /**
@@ -12,11 +14,13 @@ public class Recommander {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
     private boolean etat;
-    @ManyToOne
-    private Livreur livreur;
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JsonIgnore
+    private Livreur livreurR;
 
-    @ManyToOne
-    private Client client;
+    @ManyToOne(fetch = FetchType.LAZY,optional = false)
+    @JsonIgnore
+    private Client clientR;
 
     public Recommander() {
     }
@@ -37,19 +41,19 @@ public class Recommander {
         this.etat = etat;
     }
 
-    public Livreur getLivreur() {
-        return livreur;
+    public Livreur getLivreurR() {
+        return livreurR;
     }
 
-    public void setLivreur(Livreur livreur) {
-        this.livreur = livreur;
+    public void setLivreurR(Livreur livreur) {
+        this.livreurR = livreur;
     }
 
-    public Client getClient() {
-        return client;
+    public Client getClientR() {
+        return clientR;
     }
 
-    public void setClient(Client client) {
-        this.client = client;
+    public void setClientR(Client client) {
+        this.clientR = client;
     }
 }
