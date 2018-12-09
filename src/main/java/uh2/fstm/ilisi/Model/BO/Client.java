@@ -1,8 +1,6 @@
 package uh2.fstm.ilisi.Model.BO;
 
-import javax.persistence.Entity;
-import javax.persistence.OneToMany;
-import javax.persistence.PrimaryKeyJoinColumn;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,11 +14,20 @@ public class Client extends Utilisateur {
 
     private String adress;
 
-    @OneToMany(mappedBy = "client")
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+            ,mappedBy="clientR")
     private Set<Recommander> recommander=new HashSet<>();
+
+    @OneToMany(cascade = CascadeType.ALL,
+            fetch = FetchType.LAZY
+            ,mappedBy="client")
+    private Set<Commande> commandes;
+
 
     public Client() {
         this.setType(1);
+
     }
 
     public String getAdress() {
@@ -42,5 +49,13 @@ public class Client extends Utilisateur {
 
     public void setRecommander(Set<Recommander> recommander) {
         this.recommander = recommander;
+    }
+
+    public Set<Commande> getCommandes() {
+        return commandes;
+    }
+
+    public void setCommandes(Set<Commande> commandes) {
+        this.commandes = commandes;
     }
 }
