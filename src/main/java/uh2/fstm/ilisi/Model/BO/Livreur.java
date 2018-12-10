@@ -9,20 +9,21 @@ import java.util.Set;
  * Created by AbdoWork on 24/11/2018.
  */
 @Entity
-@PrimaryKeyJoinColumn(name="id")
+@PrimaryKeyJoinColumn(name="livreur_id")
 public class Livreur extends Utilisateur {
 
 
 
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-            ,mappedBy = "livreurR")
+    //@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "livreurR")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="livreur_id",referencedColumnName = "livreur_id")
     private Set<Recommander> recommandation=new HashSet<>();
 
 
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-            ,mappedBy="livreur")
+
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="livreur_id",referencedColumnName = "livreur_id")
     private Set<Commande> commandes=new HashSet<>();
 
     private String path_img;

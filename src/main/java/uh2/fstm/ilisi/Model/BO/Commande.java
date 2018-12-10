@@ -17,23 +17,25 @@ public class Commande implements Serializable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
+    @Column(name="cmd_id",nullable = false)
     private long id;
 
 
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-            ,mappedBy="cmd")
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="cmd_id",referencedColumnName = "cmd_id")
     private Set<LigneCommande> lignes;
+
     private double Total;
 
-    @ManyToOne(fetch = FetchType.LAZY,optional = false)
-    @JsonIgnore
-    private Client client;
 
-    @ManyToOne(fetch = FetchType.LAZY,optional = false)
-    @JsonIgnore
-    private Livreur livreur;
+    @Column(name="client_id")
+    private long client_id;
 
+
+
+    @Column(name="livreur_id")
+    private long livreur_id;
     private String titre;
     private Date date;
 
@@ -88,7 +90,7 @@ public class Commande implements Serializable {
         Total = total;
     }
 
-    public Client getClient() {
+    /*public Client getClient() {
         return client;
     }
 
@@ -102,5 +104,21 @@ public class Commande implements Serializable {
 
     public void setLivreur(Livreur livreur) {
         this.livreur = livreur;
+    }*/
+
+    public long getClient_id() {
+        return client_id;
+    }
+
+    public void setClient_id(long client_id) {
+        this.client_id = client_id;
+    }
+
+    public long getLivreur_id() {
+        return livreur_id;
+    }
+
+    public void setLivreur_id(long livreur_id) {
+        this.livreur_id = livreur_id;
     }
 }
