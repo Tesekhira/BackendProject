@@ -15,21 +15,20 @@ public class LigneCommande implements Serializable {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
 
-    @ManyToOne(fetch = FetchType.LAZY,optional = false)
-    @JsonIgnore
-    private Commande cmd;
 
+    @Column(name = "cmd_id")
+    private long cmd_id;
     private String nom_prod;
     private double prix_prod;
     private double quantite;
     private double sub_total;
 
     public LigneCommande() {
-        cmd=new Commande();
+        //cmd=new Commande();
     }
 
     public LigneCommande(Commande cmd, String nom_prod, double prix_prod, double quantite, double sub_total) {
-        this.cmd = cmd;
+        //this.cmd = cmd;
         this.nom_prod = nom_prod;
         this.prix_prod = prix_prod;
         this.quantite = quantite;
@@ -44,12 +43,20 @@ public class LigneCommande implements Serializable {
         this.id = id;
     }
 
-    public Commande getCmd() {
+    /*public Commande getCmd() {
         return cmd;
     }
 
     public void setCmd(Commande cmd) {
         this.cmd = cmd;
+    }*/
+
+    public long getCmd_id() {
+        return cmd_id;
+    }
+
+    public void setCmd_id(long cmd_id) {
+        this.cmd_id = cmd_id;
     }
 
     public String getNom_prod() {

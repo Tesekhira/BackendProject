@@ -9,19 +9,19 @@ import java.util.Set;
  * Created by AbdoWork on 24/11/2018.
  */
 @Entity
-@PrimaryKeyJoinColumn(name="id")
+@PrimaryKeyJoinColumn(name="client_id")
 public class Client extends Utilisateur {
 
     private String adress;
 
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-            ,mappedBy="clientR")
+    //@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy="clientR")
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="client_id",referencedColumnName = "client_id")
     private Set<Recommander> recommander=new HashSet<>();
 
-    @OneToMany(cascade = CascadeType.ALL,
-            fetch = FetchType.LAZY
-            ,mappedBy="client")
+
+   @OneToMany(cascade = CascadeType.ALL)
+   @JoinColumn(name="client_id",referencedColumnName = "client_id")
     private Set<Commande> commandes;
 
 
