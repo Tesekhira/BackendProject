@@ -13,4 +13,5 @@ public interface LivreurDAO extends CrudRepository<Livreur, Long> {
     boolean existsByemail(String email);
 
     Livreur findByemail(String username);
+    Livreur findById(long id);
 }

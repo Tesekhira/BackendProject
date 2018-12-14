@@ -36,8 +36,11 @@ public class Commande implements Serializable {
 
     @Column(name="livreur_id")
     private long livreur_id;
+
     private String titre;
     private Date date;
+    private int type_cmd;
+    private int etat_cmd;
 
     public Commande() {
         lignes=new HashSet<>();
@@ -90,21 +93,6 @@ public class Commande implements Serializable {
         Total = total;
     }
 
-    /*public Client getClient() {
-        return client;
-    }
-
-    public void setClient(Client client) {
-        this.client = client;
-    }
-
-    public Livreur getLivreur() {
-        return livreur;
-    }
-
-    public void setLivreur(Livreur livreur) {
-        this.livreur = livreur;
-    }*/
 
     public long getClient_id() {
         return client_id;
@@ -120,5 +108,21 @@ public class Commande implements Serializable {
 
     public void setLivreur_id(long livreur_id) {
         this.livreur_id = livreur_id;
+    }
+
+    public int getType_cmd() {
+        return type_cmd;
+    }
+
+    public void setType_cmd(int type_cmd) {
+        this.type_cmd = type_cmd;
+    }
+
+    public int getEtat_cmd() {
+        return etat_cmd;
+    }
+
+    public void setEtat_cmd(int etat_cmd) {
+        this.etat_cmd = etat_cmd;
     }
 }

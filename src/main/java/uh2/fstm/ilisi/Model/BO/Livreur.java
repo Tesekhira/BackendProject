@@ -14,7 +14,6 @@ public class Livreur extends Utilisateur {
 
 
 
-    //@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy = "livreurR")
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="livreur_id",referencedColumnName = "livreur_id")
     private Set<Recommander> recommandation=new HashSet<>();
@@ -27,7 +26,7 @@ public class Livreur extends Utilisateur {
     private Set<Commande> commandes=new HashSet<>();
 
     private String path_img;
-
+    private int etat_compte;
 
     public Livreur() {
         this.setType(2);
@@ -68,4 +67,11 @@ public class Livreur extends Utilisateur {
         this.recommandation = recommandation;
     }
 
+    public int getEtat_compte() {
+        return etat_compte;
+    }
+
+    public void setEtat_compte(int etat_compte) {
+        this.etat_compte = etat_compte;
+    }
 }

@@ -36,10 +36,13 @@ public class ClientCtrl {
 
        if( jwtTokenProvider.getemail(token)!=null)
         return (List<Client>) clientService.Retreive();
-
         return null;
     }
-
+    @RequestMapping(value="/{id}",method= RequestMethod.GET)
+    public Client getClientId(@PathVariable long id)
+    {
+        return (Client) clientService.RetreiveClient(id);
+    }
     @RequestMapping(value="/login",method= RequestMethod.POST)
     public Client getClient(@RequestBody Utilisateur cli)
     {
@@ -64,7 +67,7 @@ public class ClientCtrl {
         clientService.Supprimer(id);
 
     }
-    @RequestMapping(value="/update",method=RequestMethod.PUT)
+    @RequestMapping(value="/update",method=RequestMethod.PATCH)
     public void update(@RequestBody  Client cli,@RequestHeader("Authorization") String token)
     {
         if( jwtTokenProvider.getemail(token)!=null)

@@ -12,4 +12,5 @@ public interface UtilisateurDAO extends CrudRepository<Utilisateur, Long> {
     boolean existsByemail(String email);
 
     Utilisateur findByemail(String username);
+    Utilisateur findById(long id);
 }
