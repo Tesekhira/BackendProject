@@ -5,10 +5,12 @@ package uh2.fstm.ilisi.Controller;
  */
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import uh2.fstm.ilisi.Model.BO.Utilisateur;
 import uh2.fstm.ilisi.Service.UserService;
 import uh2.fstm.ilisi.Service.UtilisateurService;
+import uh2.fstm.ilisi.exception.CustomException;
 import uh2.fstm.ilisi.security.JwtTokenProvider;
 
 import java.util.List;
@@ -46,13 +48,15 @@ public class UtilisateurCtrl {
     public Object getUtilisateur(@RequestBody Utilisateur user)
     {
         Utilisateur myuser=utilisateurService.RetreiveUtilisateur(user);
-        switch(myuser.getType()){
-            case 1:
-                return (Object)clientCtrl.getClient(myuser);
-            case 2:
-                return (Object)livreurCtrl.getLivreur(myuser);
-        }
-        return null;
+        if(myuser!=null)
+            switch(myuser.getType()){
+                case 1:
+                    return (Object)clientCtrl.getClient(user);
+                case 2:
+                    return (Object)livreurCtrl.getLivreur(user);
+            }
+        return (Object)clientCtrl.getClient(user);
+
     }
     @RequestMapping(value="/create",method=RequestMethod.POST)
     public void create(@RequestBody Utilisateur user)
@@ -60,15 +64,17 @@ public class UtilisateurCtrl {
         utilisateurService.Insertion(user);
     }
     @RequestMapping(value="/delete/{id}",method=RequestMethod.DELETE)
-    public void delete(@PathVariable long id)
+    public void delete(@PathVariable long id,@RequestHeader("Authorization") String token)
     {
-        utilisateurService.Supprimer(id);
+        if( jwtTokenProvider.getemail(token)!=null)
+            utilisateurService.Supprimer(id);
 
     }
-    @RequestMapping(value="/update",method=RequestMethod.PUT)
-    public void update(@RequestBody Utilisateur user)
+    @RequestMapping(value="/update",method=RequestMethod.PATCH)
+    public void update(@RequestBody Utilisateur user,@RequestHeader("Authorization") String token)
     {
-        utilisateurService.Modifier(user);
+        if( jwtTokenProvider.getemail(token)!=null)
+            utilisateurService.Modifier(user);
     }
 
 }

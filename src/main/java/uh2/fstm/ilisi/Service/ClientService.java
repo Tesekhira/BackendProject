@@ -33,9 +33,13 @@ public class ClientService {
     public void Modifier(Client sup)
     {
         clientDAO.save(sup);
+
     }
 
     public Client RetreiveClient(Utilisateur client) {
         return (Client) clientDAO.findByemail(client.getEmail());
+    }
+    public Client RetreiveClient(long id) {
+        return (Client) clientDAO.findById(id);
     }
 }

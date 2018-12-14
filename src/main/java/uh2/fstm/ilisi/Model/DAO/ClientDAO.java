@@ -13,4 +13,5 @@ public interface ClientDAO extends CrudRepository<Client, Long> {
     boolean existsByemail(String email);
 
     Client findByemail(String username);
+    Client findById(long id);
 }

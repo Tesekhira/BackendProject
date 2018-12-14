@@ -43,11 +43,11 @@ public class UserService {
 		String password = authentication.getCredentials() + "";
 
 		Utilisateur user = utilisateurDAO.findByemail(username);
-		if (user == null) {
+		if (user == null || !passwordEncoder.matches(password,user.getPassword())) {
 			throw new BadCredentialsException("1000");
 		}
 
-		return new UsernamePasswordAuthenticationToken(username, password);
+		return new UsernamePasswordAuthenticationToken(username,password);
 	}
 
 	public String signin(Object obj, int type) {
@@ -57,7 +57,7 @@ public class UserService {
 				case 1:
 						Utilisateur client=(Utilisateur) obj;
 						this.authenticate(new UsernamePasswordAuthenticationToken(client.getEmail(), client.getPassword()));
-						return jwtTokenProvider.createToken(client.getEmail(), clientDAO.findByemail(client.getEmail()).getPassword());
+						return jwtTokenProvider.createToken(client.getEmail(), client.getPassword());
 				case 2:
 						Utilisateur livreur=(Utilisateur)obj;
 						this.authenticate(new UsernamePasswordAuthenticationToken(livreur.getEmail(), livreur.getPassword()));
@@ -67,7 +67,6 @@ public class UserService {
 			throw new CustomException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);
 
 		}
-
 		return null;
 	}
 

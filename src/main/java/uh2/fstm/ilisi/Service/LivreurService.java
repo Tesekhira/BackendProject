@@ -37,5 +37,8 @@ public class LivreurService {
     public Livreur RetreiveLivreur(Utilisateur client) {
         return (Livreur) livreurDao.findByemail(client.getEmail());
     }
+    public Livreur RetreiveLivreur(long id) {
+        return (Livreur) livreurDao.findById(id);
+    }
 
 }

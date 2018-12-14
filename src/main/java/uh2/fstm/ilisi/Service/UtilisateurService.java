@@ -36,4 +36,7 @@ public class UtilisateurService {
     public Utilisateur RetreiveUtilisateur(Utilisateur user) {
         return (Utilisateur) utilisateurDAO.findByemail(user.getEmail());
     }
+    public Utilisateur RetreiveUtilisateur(long id) {
+        return (Utilisateur) utilisateurDAO.findById(id);
+    }
 }

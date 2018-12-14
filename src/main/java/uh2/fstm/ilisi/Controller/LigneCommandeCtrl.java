@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import uh2.fstm.ilisi.Model.BO.LigneCommande;
 import uh2.fstm.ilisi.Service.LigneCommandeService;
+import uh2.fstm.ilisi.security.JwtTokenProvider;
 
 import java.util.List;
 
@@ -21,28 +22,36 @@ import java.util.List;
 public class LigneCommandeCtrl {
     @Autowired
     private LigneCommandeService ligneCommandeService;
-    /**/
+
+    @Autowired
+    private JwtTokenProvider jwtTokenProvider;
+
     @RequestMapping(value="/all",method= RequestMethod.GET)
-    public List<LigneCommande> getAll()
+    public List<LigneCommande> getAll(@RequestHeader("Authorization") String token)
     {
-        return (List<LigneCommande>) ligneCommandeService.Retreive();
+        if( jwtTokenProvider.getemail(token)!=null)
+            return (List<LigneCommande>) ligneCommandeService.Retreive();
+        return null;
     }
 
     @RequestMapping(value="/create",method=RequestMethod.POST)
-    public void create(@RequestBody LigneCommande lign)
+    public void create(@RequestBody LigneCommande lign,@RequestHeader("Authorization") String token)
     {
-        ligneCommandeService.Insertion(lign);
+        if( jwtTokenProvider.getemail(token)!=null)
+            ligneCommandeService.Insertion(lign);
     }
     @RequestMapping(value="/delete/{id}",method=RequestMethod.DELETE)
-    public void delete(@PathVariable long id)
+    public void delete(@PathVariable long id,@RequestHeader("Authorization") String token)
     {
-        ligneCommandeService.Supprimer(id);
+        if( jwtTokenProvider.getemail(token)!=null)
+            ligneCommandeService.Supprimer(id);
 
     }
-    @RequestMapping(value="/update",method=RequestMethod.PUT)
-    public void update(@RequestBody LigneCommande lign)
+    @RequestMapping(value="/update",method=RequestMethod.PATCH)
+    public void update(@RequestBody LigneCommande lign,@RequestHeader("Authorization") String token)
     {
-        ligneCommandeService.Modifier(lign);
+        if( jwtTokenProvider.getemail(token)!=null)
+            ligneCommandeService.Modifier(lign);
     }
 
 }
