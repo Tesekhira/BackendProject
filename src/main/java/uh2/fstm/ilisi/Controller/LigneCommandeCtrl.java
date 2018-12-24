@@ -15,8 +15,8 @@ import java.util.List;
 /**
  * Created by For work on 08/07/2018.
  */
-@CrossOrigin(origins = "http://localhost:4200")
-
+//@CrossOrigin(origins = {"http://localhost:4200","http://192.168.1.13:4200"})
+@CrossOrigin(origins  = "*")
 @RestController
 @RequestMapping("/app/lignecmd")
 public class LigneCommandeCtrl {

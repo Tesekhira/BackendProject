@@ -5,9 +5,11 @@ package uh2.fstm.ilisi.Controller;
  */
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import uh2.fstm.ilisi.Model.BO.Client;
 import uh2.fstm.ilisi.Model.BO.Utilisateur;
+import uh2.fstm.ilisi.Model.DAO.UtilisateurDAO;
 import uh2.fstm.ilisi.Service.ClientService;
 import uh2.fstm.ilisi.Service.UserService;
 import uh2.fstm.ilisi.security.JwtTokenProvider;
@@ -17,7 +19,9 @@ import java.util.List;
 /**
  * Created by For work on 08/07/2018.
  */
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = {"http://localhost:4200","http://192.168.1.13:4200"})
+@CrossOrigin(origins  = "*")
+
 @RestController
 @RequestMapping("/app/client")
 public class ClientCtrl {
@@ -28,7 +32,12 @@ public class ClientCtrl {
     private UserService userService;
 
     @Autowired
+    private UtilisateurDAO utilisateurDAO;
+    @Autowired
     private JwtTokenProvider jwtTokenProvider;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @RequestMapping(value="/all",method= RequestMethod.GET)
     public List<Client> getAll(@RequestHeader("Authorization") String token)
@@ -68,11 +77,23 @@ public class ClientCtrl {
 
     }
     @RequestMapping(value="/update",method=RequestMethod.PATCH)
-    public void update(@RequestBody  Client cli,@RequestHeader("Authorization") String token)
+    public Client update(@RequestBody  Client cli,@RequestHeader("Authorization") String token)
     {
-        if( jwtTokenProvider.getemail(token)!=null)
-        clientService.Modifier(cli);
+        if( jwtTokenProvider.getemail(token)!=null){
+            Utilisateur res=utilisateurDAO.findByemail(cli.getEmail());
+            if(res == null || (res != null  && res.getId() == cli.getId() ) )
+                return clientService.Modifier(cli);
+        }
+        return null;
     }
 
-
+    @RequestMapping(value="/CompteUpdate",method=RequestMethod.PATCH)
+    public Client updateCompte(@RequestBody  Client cli,@RequestHeader("Authorization") String token)
+    {
+        if( jwtTokenProvider.getemail(token)!=null){
+            cli.setPassword(passwordEncoder.encode(cli.getPassword()));
+            return clientService.Modifier(cli);
+        }
+        return null;
+    }
 }

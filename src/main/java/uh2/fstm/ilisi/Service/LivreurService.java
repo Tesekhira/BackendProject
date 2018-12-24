@@ -30,9 +30,9 @@ public class LivreurService {
         livreurDao.deleteById(id);
     }
 
-    public void Modifier(Livreur sup)
+    public Livreur Modifier(Livreur sup)
     {
-        livreurDao.save(sup);
+        return livreurDao.save(sup);
     }
     public Livreur RetreiveLivreur(Utilisateur client) {
         return (Livreur) livreurDao.findByemail(client.getEmail());
