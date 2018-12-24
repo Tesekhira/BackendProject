@@ -30,11 +30,9 @@ public class LivreurCtrl {
     private JwtTokenProvider jwtTokenProvider;
 
     @RequestMapping(value="/all",method= RequestMethod.GET)
-    public List<Livreur> getAll(@RequestHeader("Authorization") String token)
+    public List<Livreur> getAll()
     {
-        if( jwtTokenProvider.getemail(token)!=null)
         return (List<Livreur>) livreurService.Retreive();
-        return null;
     }
     @RequestMapping(value="/{id}",method= RequestMethod.GET)
     public Livreur getLivreurId(@PathVariable long id)

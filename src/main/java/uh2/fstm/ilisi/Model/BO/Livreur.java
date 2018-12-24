@@ -19,11 +19,15 @@ public class Livreur extends Utilisateur {
     private Set<Recommander> recommandation=new HashSet<>();
 
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="livreur_id",referencedColumnName = "livreur_id")
+    private Set<Signale> signales=new HashSet<>();
 
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="livreur_id",referencedColumnName = "livreur_id")
     private Set<Commande> commandes=new HashSet<>();
+
 
     private String path_img;
     private int etat_compte;
@@ -73,5 +77,13 @@ public class Livreur extends Utilisateur {
 
     public void setEtat_compte(int etat_compte) {
         this.etat_compte = etat_compte;
+    }
+
+    public Set<Signale> getSignales() {
+        return signales;
+    }
+
+    public void setSignales(Set<Signale> signales) {
+        this.signales = signales;
     }
 }

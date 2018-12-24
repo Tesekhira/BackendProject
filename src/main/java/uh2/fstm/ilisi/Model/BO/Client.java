@@ -14,7 +14,6 @@ public class Client extends Utilisateur {
 
     private String adress;
 
-    //@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY,mappedBy="clientR")
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="client_id",referencedColumnName = "client_id")
     private Set<Recommander> recommander=new HashSet<>();
@@ -24,6 +23,10 @@ public class Client extends Utilisateur {
    @JoinColumn(name="client_id",referencedColumnName = "client_id")
     private Set<Commande> commandes;
 
+
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name="client_id",referencedColumnName = "client_id")
+    private Set<Signale> signales=new HashSet<>();
 
     public Client() {
         this.setType(1);
@@ -57,5 +60,13 @@ public class Client extends Utilisateur {
 
     public void setCommandes(Set<Commande> commandes) {
         this.commandes = commandes;
+    }
+
+    public Set<Signale> getSignales() {
+        return signales;
+    }
+
+    public void setSignales(Set<Signale> signales) {
+        this.signales = signales;
     }
 }
