@@ -18,8 +18,8 @@ import java.util.List;
 /**
  * Created by For work on 08/07/2018.
  */
-@CrossOrigin(origins = "http://localhost:4200")
-
+//@CrossOrigin(origins = {"http://localhost:4200","http://192.168.1.13:4200"})
+@CrossOrigin(origins  = "*")
 @RestController
 @RequestMapping("/app/user")
 public class UtilisateurCtrl {
@@ -48,13 +48,16 @@ public class UtilisateurCtrl {
     public Object getUtilisateur(@RequestBody Utilisateur user)
     {
         Utilisateur myuser=utilisateurService.RetreiveUtilisateur(user);
-        if(myuser!=null)
+        if(myuser!=null){
+            System.out.println("####################### this is the livreur");
+            System.out.println(myuser.getType());
             switch(myuser.getType()){
                 case 1:
                     return (Object)clientCtrl.getClient(user);
                 case 2:
                     return (Object)livreurCtrl.getLivreur(user);
             }
+        }
         return (Object)clientCtrl.getClient(user);
 
     }

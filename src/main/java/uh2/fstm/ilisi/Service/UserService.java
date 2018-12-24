@@ -61,7 +61,7 @@ public class UserService {
 				case 2:
 						Utilisateur livreur=(Utilisateur)obj;
 						this.authenticate(new UsernamePasswordAuthenticationToken(livreur.getEmail(), livreur.getPassword()));
-						return jwtTokenProvider.createToken(livreur.getEmail(), livreurDAO.findByemail(livreur.getEmail()).getPassword());
+						return jwtTokenProvider.createToken(livreur.getEmail(), livreur.getPassword());
 			}
 		} catch (AuthenticationException e) {
 			throw new CustomException("Invalid username/password supplied", HttpStatus.UNPROCESSABLE_ENTITY);
@@ -74,7 +74,7 @@ public class UserService {
 		switch(type){
 			case 1 :
 				Client cli=(Client) user;
-				if (!clientDAO.existsByemail(cli.getEmail())) {
+				if (!utilisateurDAO.existsByemail(cli.getEmail())) {
 					cli.setPassword(passwordEncoder.encode(cli.getPassword()));
 					Client cl=clientDAO.save(cli);
 					cl.setToken(jwtTokenProvider.createToken(cli.getEmail(), cli.getPassword()));
@@ -85,7 +85,7 @@ public class UserService {
 
 			case 2:
 				Livreur liv= (Livreur) user;
-				if (!livreurDAO.existsByemail(liv.getEmail())) {
+				if (!utilisateurDAO.existsByemail(liv.getEmail())) {
 					liv.setPassword(passwordEncoder.encode(liv.getPassword()));
 					Livreur livr=livreurDAO.save(liv);
 					livr.setToken(jwtTokenProvider.createToken(liv.getEmail(), liv.getPassword()));

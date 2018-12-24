@@ -5,6 +5,7 @@ package uh2.fstm.ilisi.Controller;
  */
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import uh2.fstm.ilisi.Model.BO.Livreur;
 import uh2.fstm.ilisi.Model.BO.Utilisateur;
@@ -17,8 +18,8 @@ import java.util.List;
 /**
  * Created by For work on 08/07/2018.
  */
-@CrossOrigin(origins = "http://localhost:4200")
-
+//@CrossOrigin(origins = {"http://localhost:4200","http://192.168.1.13:4200"})
+@CrossOrigin(origins  = "*")
 @RestController
 @RequestMapping("/app/livreur")
 public class LivreurCtrl {
@@ -28,6 +29,8 @@ public class LivreurCtrl {
     private UserService userService;
     @Autowired
     private JwtTokenProvider jwtTokenProvider;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @RequestMapping(value="/all",method= RequestMethod.GET)
     public List<Livreur> getAll()
@@ -64,10 +67,21 @@ public class LivreurCtrl {
 
     }
     @RequestMapping(value="/update",method=RequestMethod.PATCH)
-    public void update(@RequestBody  Livreur liv,@RequestHeader("Authorization") String token)
+    public Livreur update(@RequestBody  Livreur liv,@RequestHeader("Authorization") String token)
     {
         if( jwtTokenProvider.getemail(token)!=null)
-            livreurService.Modifier(liv);
-    }
+            return livreurService.Modifier(liv);
 
+        return null;
+    }
+    @RequestMapping(value="/CompteUpdate",method=RequestMethod.PATCH)
+    public Livreur updateCompte(@RequestBody  Livreur liv,@RequestHeader("Authorization") String token)
+    {
+        if( jwtTokenProvider.getemail(token)!=null){
+            liv.setPassword(passwordEncoder.encode(liv.getPassword()));
+            return livreurService.Modifier(liv);
+        }
+
+        return null;
+    }
 }

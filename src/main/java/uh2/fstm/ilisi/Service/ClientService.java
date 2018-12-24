@@ -30,10 +30,9 @@ public class ClientService {
         clientDAO.deleteById(id);
     }
 
-    public void Modifier(Client sup)
+    public Client Modifier(Client sup)
     {
-        clientDAO.save(sup);
-
+        return clientDAO.save(sup);
     }
 
     public Client RetreiveClient(Utilisateur client) {
