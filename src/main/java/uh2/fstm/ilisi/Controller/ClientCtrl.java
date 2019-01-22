@@ -5,9 +5,12 @@ package uh2.fstm.ilisi.Controller;
  */
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 import uh2.fstm.ilisi.Model.BO.Client;
+import uh2.fstm.ilisi.Model.BO.Hello;
 import uh2.fstm.ilisi.Model.BO.Utilisateur;
 import uh2.fstm.ilisi.Model.DAO.UtilisateurDAO;
 import uh2.fstm.ilisi.Service.ClientService;
@@ -39,6 +42,15 @@ public class ClientCtrl {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+
+    //@GetMapping("/sock")
+    @RequestMapping(value="/sock",method= RequestMethod.GET)
+    @MessageMapping("/hello")
+    @SendTo("/socket/test")
+    public Hello getTest(Hello obj){
+        System.out.println("##################### " + obj.getName());
+        return new Hello("Hi,"+ obj.getName() +"!");
+    }
     @RequestMapping(value="/all",method= RequestMethod.GET)
     public List<Client> getAll(@RequestHeader("Authorization") String token)
     {

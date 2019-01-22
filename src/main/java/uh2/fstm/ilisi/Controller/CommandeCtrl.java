@@ -5,6 +5,8 @@ package uh2.fstm.ilisi.Controller;
  */
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.web.bind.annotation.*;
 import uh2.fstm.ilisi.Model.BO.Commande;
 import uh2.fstm.ilisi.Service.CommandeService;
@@ -35,10 +37,14 @@ public class CommandeCtrl {
     }
 
     @RequestMapping(value="/create",method=RequestMethod.POST)
-    public void create(@RequestBody Commande cmd,@RequestHeader("Authorization") String token)
+    @MessageMapping("/newCommande")
+    @SendTo("/socket/new")
+    public Commande create(@RequestBody Commande cmd,@RequestHeader("Authorization") String token)
     {
         if( jwtTokenProvider.getemail(token)!=null)
-            commandeService.Insertion(cmd);
+            return commandeService.Insertion(cmd);
+
+        return null;
     }
     @RequestMapping(value="/delete/{id}",method=RequestMethod.DELETE)
     public void delete(@PathVariable long id,@RequestHeader("Authorization") String token)
