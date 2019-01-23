@@ -6,8 +6,9 @@ public class Hello {
 	public Hello() {
 	}
 
-	public Hello(String greeting) {
+	public Hello(String greeting , String name) {
 		this.greeting = greeting;
+		this.name = name;
 	}
 
 	public void setGreeting(String greeting) {

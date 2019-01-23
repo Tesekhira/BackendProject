@@ -24,7 +24,6 @@ import java.util.List;
  */
 //@CrossOrigin(origins = {"http://localhost:4200","http://192.168.1.13:4200"})
 @CrossOrigin(origins  = "*")
-
 @RestController
 @RequestMapping("/app/client")
 public class ClientCtrl {
@@ -43,13 +42,16 @@ public class ClientCtrl {
     private PasswordEncoder passwordEncoder;
 
 
-    //@GetMapping("/sock")
     @RequestMapping(value="/sock",method= RequestMethod.GET)
+    public Hello getTest(){
+        return new Hello("Hi,abdlwahde!", "abdlwahde");
+    }
+
     @MessageMapping("/hello")
     @SendTo("/socket/test")
-    public Hello getTest(Hello obj){
-        System.out.println("##################### " + obj.getName());
-        return new Hello("Hi,"+ obj.getName() +"!");
+    public Hello myFunct(Hello obj)
+    {
+        return new Hello("Hi,"+ obj.getName() +"!",obj.getName());
     }
     @RequestMapping(value="/all",method= RequestMethod.GET)
     public List<Client> getAll(@RequestHeader("Authorization") String token)
