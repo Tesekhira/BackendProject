@@ -20,9 +20,9 @@ public class CommandeService {
         return (List<Commande>) commandeDao.findAll();
     }
 
-    public void Insertion(Commande sup)
+    public Commande Insertion(Commande sup)
     {
-        commandeDao.save(sup);
+        return commandeDao.save(sup);
     }
 
     public void Supprimer(Long id)
