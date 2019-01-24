@@ -13,6 +13,7 @@ import java.util.Set;
 public class Client extends Utilisateur {
 
     private String adress;
+    private int nbSignale = 0;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name="client_id",referencedColumnName = "client_id")
@@ -68,5 +69,13 @@ public class Client extends Utilisateur {
 
     public void setSignales(Set<Signale> signales) {
         this.signales = signales;
+    }
+
+    public int getNbSignale() {
+        return nbSignale;
+    }
+
+    public void setNbSignale(int nbSignale) {
+        this.nbSignale = nbSignale;
     }
 }
