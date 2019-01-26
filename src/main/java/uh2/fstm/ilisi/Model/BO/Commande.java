@@ -39,7 +39,18 @@ public class Commande implements Serializable {
 
     private String titre;
     private Date date;
+    /****
+     * type_cmd = 1: commande express
+     * type_cmd = 0: commande normale
+     */
     private int type_cmd;
+    /***
+     * etat_cmd = 0: commande envoyée au livreur
+     * etat_cmd = 1: commande accéptée par le livreur
+     * etat_cmd = 2: commande encours de livraison
+     * etat_cmd = 3: commande livrée par le livreur
+     * etat_cmd = 4: commande annuler
+     */
     private int etat_cmd;
 
     public Commande() {

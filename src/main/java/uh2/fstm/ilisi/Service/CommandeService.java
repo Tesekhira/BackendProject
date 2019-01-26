@@ -30,8 +30,8 @@ public class CommandeService {
         commandeDao.deleteById(id);
     }
 
-    public void Modifier(Commande sup)
+    public Commande Modifier(Commande sup)
     {
-        commandeDao.save(sup);
+        return commandeDao.save(sup);
     }
 }
