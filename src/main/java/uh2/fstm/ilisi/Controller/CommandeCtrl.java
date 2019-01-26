@@ -62,9 +62,16 @@ public class CommandeCtrl {
 
     }
     @RequestMapping(value="/update",method=RequestMethod.PATCH)
-    public void update(@RequestBody Commande cmd,@RequestHeader("Authorization") String token)
+    public Commande update(@RequestBody Commande cmd,@RequestHeader("Authorization") String token)
     {
         if( jwtTokenProvider.getemail(token)!=null)
-            commandeService.Modifier(cmd);
+            return commandeService.Modifier(cmd);
+        return null;
+    }
+    @MessageMapping("/ChangeEtat")
+    @SendTo("/socket/EtatCommande")
+    public Commande updateCmd(Commande cmd)
+    {
+        return cmd;
     }
 }

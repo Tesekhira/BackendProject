@@ -100,7 +100,12 @@ public class ClientCtrl {
         }
         return null;
     }
-
+    @MessageMapping("/updateCli")
+    @SendTo("/socket/profileClient")
+    public Client updateCli(Client cli)
+    {
+        return cli;
+    }
     @RequestMapping(value="/CompteUpdate",method=RequestMethod.PATCH)
     public Client updateCompte(@RequestBody  Client cli,@RequestHeader("Authorization") String token)
     {

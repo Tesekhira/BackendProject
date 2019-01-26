@@ -5,8 +5,11 @@ package uh2.fstm.ilisi.Controller;
  */
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import uh2.fstm.ilisi.Model.BO.Client;
 import uh2.fstm.ilisi.Model.BO.Livreur;
 import uh2.fstm.ilisi.Model.BO.Utilisateur;
 import uh2.fstm.ilisi.Service.LivreurService;
@@ -73,6 +76,12 @@ public class LivreurCtrl {
             return livreurService.Modifier(liv);
 
         return null;
+    }
+    @MessageMapping("/updateLiv")
+    @SendTo("/socket/profileLivreur")
+    public Livreur updateLiv(Livreur Liv)
+    {
+        return Liv;
     }
     @RequestMapping(value="/CompteUpdate",method=RequestMethod.PATCH)
     public Livreur updateCompte(@RequestBody  Livreur liv,@RequestHeader("Authorization") String token)
